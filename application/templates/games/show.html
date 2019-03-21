@@ -1,0 +1,31 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<div>
+  <h1>{{ game.name }}</h1>
+  <i>A game by {{ game.developer }}</i>
+  <p>Released in {{ game.year }}</p>
+  <p>Genre: {{ game.genre }}</p>
+
+  <h3>Update info</h3>
+  <form method="POST" action="{{ url_for('game_update', id=game.id) }}">
+    <div>
+      Name: 
+      <input type="text" name="name" value="{{ game.name }}" />
+    </div>
+    <div>
+      Developer: 
+      <input type="text" name="developer" value="{{ game.developer }}" />
+    </div>
+    <div>
+      Year: 
+      <input type="number" name="year" value="{{ game.year }}" />
+    </div>
+    <div>
+      Genre: 
+      <input type="text" name="genre" value="{{ game.genre }}" />
+    </div>
+    <button type="submit">Update</button>
+  </form>
+</div>
+{% endblock %}

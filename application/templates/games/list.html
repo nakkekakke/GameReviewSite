@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<div>
+  <h1>List of all games</h1>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Developer</th>
+      <th>Year</th>
+      <th>Genre</th>
+    </tr>
+    {% for game in games %}
+    <tr>
+      <td><a href="{{ url_for('game_view', id=game.id) }}">{{ game.name }}</a></td>
+      <td>{{ game.developer }}</td>
+      <td>{{ game.year }}</td>
+      <td>{{ game.genre }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}
