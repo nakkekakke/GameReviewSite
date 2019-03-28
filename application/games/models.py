@@ -10,7 +10,7 @@ class Game(db.Model):
         onupdate = db.func.current_timestamp()
     )
     name = db.Column(db.String(144), nullable=False)
-    developer = db.Column(db.String(144))
+    developer = db.Column(db.String(144), nullable=False)
     year = db.Column(db.Integer, nullable=False)
     genre = db.Column(db.String(144))
 

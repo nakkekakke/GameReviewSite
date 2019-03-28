@@ -4,25 +4,73 @@
 <div>
   <h1>Add a new game</h1>
   <form method="POST" action="{{ url_for('games_create') }}">
-    <div>
-      Name
-      <input type="text" name="name" />
-    </div>
-    <div>
-      Developer
-      <input type="text" name="developer" />
-    </div>
-    <div>
-      Year
-      <input type="number" name="year" />
-    </div>
-    <div>
-      Genre
-      <input type="text" name="genre" />
-    </div>
-    <div>
-      <button type="submit">Add a new game</button>
-    </div>
+    <table>
+      <tr>
+        <td>
+          {{ form.name.label }}
+        </td>
+        <td>
+          {{ form.name }}
+        </td>
+        <td>
+          <ul>
+            {% for error in form.name.errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          {{ form.developer.label }}
+        </td>
+        <td>
+          {{ form.developer }}
+        </td>
+        <td>
+          <ul>
+            {% for error in form.developer.errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          {{ form.year.label }}
+        </td>
+        <td>
+          {{ form.year }}
+        </td>
+        <td>
+          <ul>
+            {% for error in form.year.errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          {{ form.genre.label }}
+        </td>
+        <td>
+          {{ form.genre }}
+        </td>
+        <td>
+          <ul>
+            {% for error in form.genre.errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <button type="submit">Add a new game</button>
+        </td>
+      </tr>
+    </table>
   </form>
 </div>
 {% endblock %}
