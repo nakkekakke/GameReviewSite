@@ -10,4 +10,3 @@ class GameForm(FlaskForm):
 
     class Meta:
         csrf = False
-        

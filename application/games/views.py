@@ -11,7 +11,7 @@ def games_index():
 @app.route('/games/new/')
 @login_required
 def games_form():
-    return render_template('/games/new.html', form = GameForm())
+    return render_template('games/new.html', form = GameForm())
 
 @app.route('/games/', methods=['POST'])
 @login_required
@@ -34,18 +34,33 @@ def games_create():
 
 @app.route('/games/<id>/', methods=['GET'])
 def game_view(id):
-    return render_template('/games/show.html', game = Game.query.get(id))
+    game = Game.query.get(id)
+    if not game:
+        return redirect(url_for('games_index'))
+    return render_template('games/show.html', game = game, form=GameForm())
 
 @app.route('/games/<id>/', methods=['POST'])
 @login_required
 def game_update(id):
-    newGame = constructGame(request.form)
+    newGame = GameForm(request.form)
     oldGame = Game.query.get(id)
+    if (not newGame) or (not oldGame):
+        return redirect(url_for('game_view', id = id))
+    if not newGame.validate():
+        return render_template('games/show.html', game = oldGame, form = newGame)
     compareGamesAndUpdate(oldGame, newGame)
     db.session().commit()
     return redirect(url_for('game_view', id = oldGame.id))
 
-
+@app.route('/games/delete/<id>/', methods=['POST'])
+@login_required
+def game_delete(id):
+    game = Game.query.get(id)
+    if not game:
+        return redirect(url_for('game_view', id = id))
+    db.session().delete(game)
+    db.session().commit()
+    return redirect(url_for('games_index'))
 
 # Helper methods
 
@@ -58,11 +73,11 @@ def constructGame(formData):
     )
 
 def compareGamesAndUpdate(old, new):
-    if old.name != new.name:
-        old.name = new.name
-    if old.developer != new.developer:
-        old.developer = new.developer
-    if old.year != new.year:
-        old.year = new.year
-    if old.genre != new.genre:
-        old.genre = new.genre
+    if old.name != new.name.data:
+        old.name = new.name.data
+    if old.developer != new.developer.data:
+        old.developer = new.developer.data
+    if old.year != new.year.data:
+        old.year = new.year.data
+    if old.genre != new.genre.data:
+        old.genre = new.genre.data

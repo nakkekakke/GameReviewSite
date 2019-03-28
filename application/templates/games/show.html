@@ -9,23 +9,79 @@
 
   <h3>Update info</h3>
   <form method="POST" action="{{ url_for('game_update', id=game.id) }}">
-    <div>
-      Name: 
-      <input type="text" name="name" value="{{ game.name }}" />
-    </div>
-    <div>
-      Developer: 
-      <input type="text" name="developer" value="{{ game.developer }}" />
-    </div>
-    <div>
-      Year: 
-      <input type="number" name="year" value="{{ game.year }}" />
-    </div>
-    <div>
-      Genre: 
-      <input type="text" name="genre" value="{{ game.genre }}" />
-    </div>
-    <button type="submit">Update</button>
+    <table>
+      <tr>
+        <td>
+          {{ form.name.label }}
+        </td>
+        <td>
+          {{ form.name(value = game.name) }}
+        </td>
+        <td>
+          <ul>
+            {% for error in form.name.errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          {{ form.developer.label }}
+        </td>
+        <td>
+          {{ form.developer(value = game.developer) }}
+        </td>
+        <td>
+          <ul>
+            {% for error in form.developer.errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          {{ form.year.label }}
+        </td>
+        <td>
+          {{ form.year(value = game.year) }}
+        </td>
+        <td>
+          <ul>
+            {% for error in form.year.errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          {{ form.genre.label }}
+        </td>
+        <td>
+          {{ form.genre(value = game.genre) }}
+        </td>
+        <td>
+          <ul>
+            {% for error in form.genre.errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <button type="submit">Update</button>
+        </td>
+      </tr>
+    </table>
   </form>
-</div>
+  <br>
+  <h3>Delete game</h3>
+  <form method="POST" action="{{ url_for('game_delete', id=game.id) }}">
+    <button type="submit">Delete</button>
+    <p>Deletion is permanent! Use with caution</p>
+  </form>
+  </div>
 {% endblock %}
