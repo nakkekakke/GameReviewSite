@@ -1,20 +1,30 @@
+# Flask app
 from flask import Flask
 app = Flask(__name__)
 
+# Database
 from flask_sqlalchemy import SQLAlchemy
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///games.db'
-app.config['SQLALCHEMY_ECHO'] = True
+import os
+
+if os.environ.get('HEROKU'):
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+else:
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///games.db'
+    app.config['SQLALCHEMY_ECHO'] = True
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 db = SQLAlchemy(app)
 
+# Application functionality
 from application import views
 from application.games import models
 from application.games import views
 from application.auth import models
 from application.auth import views
 
+# Login
 from application.auth.models import User
 from os import urandom
 app.config['SECRET_KEY'] = urandom(32)
@@ -29,4 +39,8 @@ login_manager.login_message = 'Please login to use this functionality'
 def load_user(user_id):
     return User.query.get(user_id)
 
-db.create_all()
+# Create db tables if they don't exist
+try:
+    db.create_all()
+except:
+    pass
