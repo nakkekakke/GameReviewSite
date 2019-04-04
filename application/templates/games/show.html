@@ -7,6 +7,8 @@
   <p>Released in {{ game.year }}</p>
   <p>Genre: {{ game.genre }}</p>
 
+  <p>Average rating: {{ avg }}</p>
+
   <h3>Update info</h3>
   <form method="POST" action="{{ url_for('games_update', id=game.id) }}">
     <table>

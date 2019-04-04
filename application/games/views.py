@@ -37,7 +37,8 @@ def games_view(id):
     game = Game.query.get(id)
     if not game:
         return redirect(url_for('games_index'))
-    return render_template('games/show.html', game = game, form=GameForm())
+    avg = Game.find_average_score(id)
+    return render_template('games/show.html', game = game, avg = avg, form=GameForm())
 
 @app.route('/games/<id>/', methods=['POST'])
 @login_required
@@ -47,7 +48,8 @@ def games_update(id):
     if (not newGame) or (not oldGame):
         return redirect(url_for('games_view', id = id))
     if not newGame.validate():
-        return render_template('games/show.html', game = oldGame, form = newGame)
+        avg = Game.find_average_score(id)
+        return render_template('games/show.html', game = oldGame, avg = avg, form = newGame)
     compareGamesAndUpdate(oldGame, newGame)
     db.session().commit()
     return redirect(url_for('games_view', id = oldGame.id))

@@ -20,9 +20,7 @@ class Game(Base):
         self.genre = genre
 
     @staticmethod
-    def find_reviews_of_game(game_id):
-        print(game_id)   
-
+    def find_reviews_of_game(game_id): 
         stmt = text("SELECT review.content, review.rating"
                     " FROM review"
                     " WHERE review.game_id = :game_id"
@@ -34,3 +32,14 @@ class Game(Base):
             reviews.append({ "content": row[0], "rating": row[1] })
 
         return reviews
+
+    def find_average_score(game_id):
+        stmt = text("SELECT AVG(rating) FROM review"
+                    " WHERE review.game_id = :game_id"
+        ).params(game_id = game_id)
+
+        res = db.engine.execute(stmt)
+        print(vars(res))
+        for row in res:
+            return round(row[0], 2)
+
