@@ -8,8 +8,6 @@ from application.games.models import Game
 @app.route('/reviews/new/<game_id>/', methods=['GET'])
 @login_required
 def reviews_form(game_id):
-    print("Lisätään")
-    print(game_id)
     game = Game.query.get(game_id)
     if not game:
         return redirect(url_for('games_index'))

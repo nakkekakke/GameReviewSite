@@ -21,8 +21,8 @@ class Game(Base):
 
     @staticmethod
     def find_reviews_of_game(game_id):
-        if not isinstance(game_id, int):
-            return null
+        if not game_id.isdigit():
+            return None
 
         stmt = text("SELECT review.content, review.rating"
                     " FROM review, game"
