@@ -4,4 +4,4 @@ Peliarvostelusivustolla käyttäjät voivat antaa arvosteluja sovelluksen pelili
 
 Linkit [user storyihin](https://github.com/nakkekakke/tsoha2019/blob/master/documentation/user_stories.md) ja [tietokantakaavioon](https://github.com/nakkekakke/tsoha2019/blob/master/documentation/database_diagram.png)
 
-Sovellus löytyy [Herokusta](https://game-review-site.herokuapp.com/)
+Sovellus löytyy [Herokusta](https://game-review-site.herokuapp.com/). Käyttäjänimi: testi, salasana: testi
