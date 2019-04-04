@@ -51,6 +51,7 @@ def reviews_show(game_id):
         return redirect(url_for('games_index'))
 
     reviews = Game.find_reviews_of_game(game_id)
+    print(reviews)
 
     return render_template('reviews/list.html',
         game = game,

@@ -21,13 +21,12 @@ class Game(Base):
 
     @staticmethod
     def find_reviews_of_game(game_id):
-        if not game_id.isdigit():
-            return None
+        print(game_id)   
 
         stmt = text("SELECT review.content, review.rating"
-                    " FROM review, game"
-                    " WHERE game.id = review.id"
-        )
+                    " FROM review"
+                    " WHERE review.game_id = :game_id"
+        ).params(game_id = game_id)
         res = db.engine.execute(stmt)
 
         reviews = []
