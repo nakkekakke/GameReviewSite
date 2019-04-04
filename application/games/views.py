@@ -33,7 +33,7 @@ def games_create():
     return redirect(url_for('games_index'))
 
 @app.route('/games/<id>/', methods=['GET'])
-def game_view(id):
+def games_view(id):
     game = Game.query.get(id)
     if not game:
         return redirect(url_for('games_index'))
@@ -41,23 +41,23 @@ def game_view(id):
 
 @app.route('/games/<id>/', methods=['POST'])
 @login_required
-def game_update(id):
+def games_update(id):
     newGame = GameForm(request.form)
     oldGame = Game.query.get(id)
     if (not newGame) or (not oldGame):
-        return redirect(url_for('game_view', id = id))
+        return redirect(url_for('games_view', id = id))
     if not newGame.validate():
         return render_template('games/show.html', game = oldGame, form = newGame)
     compareGamesAndUpdate(oldGame, newGame)
     db.session().commit()
-    return redirect(url_for('game_view', id = oldGame.id))
+    return redirect(url_for('games_view', id = oldGame.id))
 
 @app.route('/games/delete/<id>/', methods=['POST'])
 @login_required
-def game_delete(id):
+def games_delete(id):
     game = Game.query.get(id)
     if not game:
-        return redirect(url_for('game_view', id = id))
+        return redirect(url_for('games_view', id = id))
     db.session().delete(game)
     db.session().commit()
     return redirect(url_for('games_index'))

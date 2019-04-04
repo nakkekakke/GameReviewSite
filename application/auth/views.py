@@ -24,7 +24,6 @@ def auth_login():
             form = form,
             error = 'No such username or password'
         )
-
     login_user(user)
     return redirect(url_for('index'))
 

@@ -1,0 +1,20 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<div>
+  <h1>Reviews of {{ game.name }}</h1>
+    {% for review in reviews %}
+      <div style="border:1px solid black">
+        <p style="margin:15px 10px">
+          {{ review.content }}
+        </p>
+        <p style="margin:15px 10px 10px">
+          Rating: {{ review.rating }}/10
+        </p>
+      </div>
+    {% endfor %}
+    <form method="GET" action="{{ url_for('games_view', id=game.id) }}">
+      <button>Go back</button>
+    </form>
+</div>
+{% endblock %}

@@ -10,10 +10,10 @@ import os
 if os.environ.get('HEROKU'):
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 else:
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///games.db'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///reviewapp.db'
     app.config['SQLALCHEMY_ECHO'] = True
 
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
@@ -21,6 +21,8 @@ db = SQLAlchemy(app)
 from application import views
 from application.games import models
 from application.games import views
+from application.reviews import models
+from application.reviews import views
 from application.auth import models
 from application.auth import views
 
