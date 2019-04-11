@@ -7,7 +7,11 @@
   <p>Released in {{ game.year }}</p>
   <p>Genre: {{ game.genre }}</p>
 
-  <p>Average rating: {{ avg }}</p>
+  {% if avg %}
+    <p>Average rating: {{ avg }}</p>
+  {% else %}
+    <p>This game has no reviews</p>
+  {% endif %}
 
   <h3>Update info</h3>
   <form method="POST" action="{{ url_for('games_update', id=game.id) }}">
@@ -84,8 +88,9 @@
     <button>Rate this game</button>
   </form>
   <form method="GET" action="{{ url_for('reviews_show', game_id=game.id) }}">
-      <button>See ratings</button>
+      <button>See reviews</button>
     </form>
+  <br>
   <form method="POST" action="{{ url_for('games_delete', id=game.id) }}">
     <button type="submit">Delete this game</button>
     <p>Deletion is permanent! Use with caution</p>

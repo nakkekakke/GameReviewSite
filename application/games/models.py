@@ -1,7 +1,6 @@
+from sqlalchemy.sql import text
 from application import db
 from application.models import Base
-
-from sqlalchemy.sql import text
 
 class Game(Base):
     __tablename__ = 'game'
@@ -9,7 +8,7 @@ class Game(Base):
     name = db.Column(db.String(144), nullable=False)
     developer = db.Column(db.String(144), nullable=False)
     year = db.Column(db.Integer, nullable=False)
-    genre = db.Column(db.String(144))
+    genre = db.Column(db.String(144), nullable=False)
 
     reviews = db.relationship('Review', backref='game', lazy=True)
 
@@ -21,7 +20,7 @@ class Game(Base):
 
     @staticmethod
     def find_reviews_of_game(game_id): 
-        stmt = text("SELECT review.content, review.rating"
+        stmt = text("SELECT review.content, review.rating, review.account_id"
                     " FROM review"
                     " WHERE review.game_id = :game_id"
         ).params(game_id = game_id)
@@ -38,8 +37,7 @@ class Game(Base):
                     " WHERE review.game_id = :game_id"
         ).params(game_id = game_id)
 
-        res = db.engine.execute(stmt)
-        print(vars(res))
-        for row in res:
-            return round(row[0], 2)
+        res = db.engine.execute(stmt).first()[0]
+        if (res):
+            return round(res, 2)
 

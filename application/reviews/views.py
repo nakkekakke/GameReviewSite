@@ -1,12 +1,13 @@
 from flask import render_template, request, redirect, url_for
-from flask_login import login_required, current_user
-from application import app, db
+from flask_login import current_user
+
+from application import app, db, login_required
 from application.reviews.models import Review
 from application.reviews.forms import ReviewForm
 from application.games.models import Game
 
 @app.route('/reviews/new/<game_id>/', methods=['GET'])
-@login_required
+@login_required()
 def reviews_form(game_id):
     game = Game.query.get(game_id)
     if not game:
@@ -18,7 +19,7 @@ def reviews_form(game_id):
     )
 
 @app.route('/reviews/<game_id>/', methods=['POST'])
-@login_required
+@login_required()
 def reviews_create(game_id):
     game = Game.query.get(game_id)
     if not game:
@@ -44,18 +45,14 @@ def reviews_create(game_id):
     return redirect(url_for('games_index'))
 
 @app.route('/reviews/<game_id>/', methods=['GET'])
-@login_required
 def reviews_show(game_id):
     game = Game.query.get(game_id)
     if not game:
         return redirect(url_for('games_index'))
 
-    reviews = Game.find_reviews_of_game(game_id)
-    print(reviews)
-
     return render_template('reviews/list.html',
         game = game,
-        reviews = reviews
+        reviews = Game.find_reviews_of_game(game_id)
     )
     
     

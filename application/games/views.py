@@ -1,6 +1,7 @@
 from flask import render_template, request, redirect, url_for
-from flask_login import login_required, current_user
-from application import app, db
+from flask_login import current_user
+
+from application import app, db, login_required
 from application.games.models import Game
 from application.games.forms import GameForm
 
@@ -9,12 +10,12 @@ def games_index():
     return render_template('games/list.html', games = Game.query.all())
 
 @app.route('/games/new/')
-@login_required
+@login_required()
 def games_form():
     return render_template('games/new.html', form = GameForm())
 
 @app.route('/games/', methods=['POST'])
-@login_required
+@login_required()
 def games_create():
     form = GameForm(request.form)
 
@@ -41,7 +42,7 @@ def games_view(id):
     return render_template('games/show.html', game = game, avg = avg, form=GameForm())
 
 @app.route('/games/<id>/', methods=['POST'])
-@login_required
+@login_required(role="ADMIN")
 def games_update(id):
     newGame = GameForm(request.form)
     oldGame = Game.query.get(id)
@@ -55,7 +56,7 @@ def games_update(id):
     return redirect(url_for('games_view', id = oldGame.id))
 
 @app.route('/games/delete/<id>/', methods=['POST'])
-@login_required
+@login_required(role="ADMIN")
 def games_delete(id):
     game = Game.query.get(id)
     if not game:
