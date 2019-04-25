@@ -31,17 +31,5 @@ class User(Base):
     def is_authenticated(self):
         return True
 
-    @staticmethod
-    def find_reviews_of_user(user_id): 
-        stmt = text("SELECT review.content, review.rating, review.game_id"
-                    " FROM review"
-                    " WHERE review.account_id = :account_id"
-        ).params(account_id = user_id)
-        res = db.engine.execute(stmt)
-
-        reviews = []
-        for row in res:
-            game = Game.query.get(row[2])
-            reviews.append({ "content": row[0], "rating": row[1], "game": game})
-
-        return reviews
+    def find_reviews(self):
+        return self.reviews

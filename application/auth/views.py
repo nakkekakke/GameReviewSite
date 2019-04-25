@@ -27,10 +27,12 @@ def auth_login():
     login_user(user)
     return redirect(url_for('index'))
 
+
 @app.route('/auth/logout/')
 def auth_logout():
     logout_user()
     return redirect(url_for('index'))
+
 
 @app.route('/auth/register/', methods=['GET', 'POST'])
 def auth_register():
@@ -52,12 +54,13 @@ def auth_register():
     db.session().commit()
     return redirect(url_for('auth_login'))
 
+
 @app.route('/auth/user/')
 def auth_user():
     return render_template(
         'auth/showuser.html',
         user = current_user,
-        reviews = User.find_reviews_of_user(current_user.id)
+        reviews = current_user.find_reviews()
     )
     
 

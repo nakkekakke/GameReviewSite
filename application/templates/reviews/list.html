@@ -9,7 +9,21 @@
       {{ review.content }}
     </p>
     <p style="margin:15px 10px 10px">
-      Rating: {{ review.rating }}/10
+      {% set review_user = review.find_user() %}
+      Rating: {{ review.rating }}/10, reviewed by
+      {% if review_user.name == current_user.name %}
+      you
+      {% else %}
+      {{ review_user.name }}
+      {% endif %}
+      {% if current_user.role == 'ADMIN' or review_user.name == current_user.name %}
+      <form method="GET" action="{{ url_for('reviews_edit', id=review.id) }}">
+        <button type="submit">Edit review</button>
+      </form>
+      <form method="POST" action="{{ url_for('reviews_delete', id=review.id) }}">
+        <button type="submit">Delete review</button>
+      </form>
+      {% endif %}
     </p>
   </div>
   {% endfor %}

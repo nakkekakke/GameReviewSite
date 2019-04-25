@@ -49,12 +49,10 @@ def login_required(role="NORMAL"):
 
 # Application functionality
 from application import views
-from application.games import models
-from application.games import views
-from application.reviews import models
-from application.reviews import views
-from application.auth import models
-from application.auth import views
+from application.games import models, views
+from application.reviews import models, views
+from application.categories import models, views
+from application.auth import models, views
 
 # Login part 2
 from application.auth.models import User

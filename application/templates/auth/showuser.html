@@ -18,6 +18,12 @@
   <p style="margin:15px 10px 10px">
     Rating: {{ review.rating }}/10
   </p>
+  <form method="GET" action="{{ url_for('reviews_edit', id=review.id) }}">
+    <button type="submit">Edit review</button>
+  </form>
+  <form method="POST" action="{{ url_for('reviews_delete', id=review.id) }}">
+    <button type="submit">Delete review</button>
+  </form>
 </div>
 {% endfor %}
 

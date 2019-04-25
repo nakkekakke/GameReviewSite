@@ -1,5 +1,6 @@
 from application import db
 from application.models import Base
+from application.auth.models import User
 
 class Review(Base):
     __tablename__ = 'review'
@@ -19,3 +20,6 @@ class Review(Base):
     def __init__(self, content, rating):
         self.content = content
         self.rating = rating
+
+    def find_user(self):
+        return User.query.get(self.account_id)

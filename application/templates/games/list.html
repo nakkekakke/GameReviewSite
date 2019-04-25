@@ -8,14 +8,20 @@
       <th>Name</th>
       <th>Developer</th>
       <th>Year</th>
-      <th>Genre</th>
+      <th>Categories</th>
     </tr>
     {% for game in games %}
-    <tr>
+    <tr style="border-top:1px solid black">
       <td><a href="{{ url_for('games_view', id=game.id) }}">{{ game.name }}</a></td>
       <td>{{ game.developer }}</td>
       <td>{{ game.year }}</td>
-      <td>{{ game.genre }}</td>
+      <td>
+        <ul>
+          {% for category in game.categories %}
+            <li>{{ category.name }}</li>
+          {% endfor %}
+        </ul>
+      </td>
     </tr>
     {% endfor %}
   </table>

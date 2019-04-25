@@ -2,15 +2,16 @@
 
 {% block body %}
 <div>
-  <h1>Review game {{ game.name }}</h1>
-  <form method="POST" action="{{ url_for('reviews_create', game_id=game.id) }}">
+  <h1>Edit review of {{ game.name }}</h1>
+  <form method="POST" action="{{ url_for('reviews_edit', id=review.id) }}">
     <table>
       <tr>
         <td>
           {{ form.content.label }}
         </td>
         <td>
-          {{ form.content }}
+          {% set text = form.content.process_data(review.content) %}
+          {{ form.content(value = text) }}
         </td>
         <td>
           <ul>
@@ -25,7 +26,7 @@
           {{ form.rating.label }}
         </td>
         <td>
-          {{ form.rating }}
+          {{ form.rating(value = review.rating) }}
         </td>
         <td>
           <ul>
@@ -36,10 +37,14 @@
         </td>
       </tr>
     </table>
-    <button type="submit">Submit</button>
+    <button type="submit">Update</button>
   </form>
-  <form method="GET" action="{{ url_for('games_view', id=game.id) }}">
-    <button>Go back</button>
+  <form method="GET" action="{{ url_for('reviews_show', game_id=game.id) }}">
+    <button>Back to game page</button>
+  </form>
+  <form method="GET" action="{{ url_for('auth_user') }}">
+    <button>Back to your profile</button>
   </form>
 </div>
+
 {% endblock %}

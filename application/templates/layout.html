@@ -20,6 +20,9 @@
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('games_form') }}">Add a game</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('categories_form') }}">Add a category</a>
+          </li>
         </ul>
         <div class="form-inline mt-2 mt-md-0">
 	        {% if current_user.is_authenticated %}
