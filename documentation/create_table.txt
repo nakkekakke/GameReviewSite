@@ -1,0 +1,43 @@
+CREATE TABLE category (
+	id INTEGER NOT NULL, 
+	date_created DATETIME, 
+	date_modified DATETIME, 
+	name VARCHAR(144) NOT NULL, 
+	PRIMARY KEY (id)
+);
+CREATE TABLE game (
+	id INTEGER NOT NULL, 
+	date_created DATETIME, 
+	date_modified DATETIME, 
+	name VARCHAR(144) NOT NULL, 
+	developer VARCHAR(144) NOT NULL, 
+	year INTEGER NOT NULL, 
+	PRIMARY KEY (id)
+);
+CREATE TABLE account (
+	id INTEGER NOT NULL, 
+	date_created DATETIME, 
+	date_modified DATETIME, 
+	name VARCHAR(144) NOT NULL, 
+	username VARCHAR(144) NOT NULL, 
+	password VARCHAR(144) NOT NULL, 
+	role VARCHAR(144) NOT NULL, 
+	PRIMARY KEY (id)
+);
+CREATE TABLE review (
+	id INTEGER NOT NULL, 
+	date_created DATETIME, 
+	date_modified DATETIME, 
+	content VARCHAR(144) NOT NULL, 
+	rating INTEGER NOT NULL, 
+	game_id INTEGER NOT NULL, 
+	account_id INTEGER NOT NULL, 
+	PRIMARY KEY (id), 
+	FOREIGN KEY(game_id) REFERENCES game (id), 
+	FOREIGN KEY(account_id) REFERENCES account (id)
+);
+CREATE TABLE gamecategory (
+	game_id INTEGER NOT NULL, 
+	category_id INTEGER NOT NULL, 
+	FOREIGN KEY(game_id) REFERENCES game (id), 
+	FOREIGN KEY(category_id) REFERENCES category (id)
