@@ -94,6 +94,9 @@ def games_delete(id):
     if not game:
         return redirect(url_for('games_index'))
 
+    for review in game.reviews:
+        db.session().delete(review)
+
     db.session().delete(game)
     db.session().commit()
 
