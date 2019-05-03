@@ -24,6 +24,7 @@
   {% endfor %}
   </ul>
   
+  {% if catform.category.choices %}
   <h4>Add a category</h4>
   <form method="POST" action="{{ url_for('games_category_create', id=game.id) }}">
     <tr>
@@ -38,6 +39,7 @@
       </td>
     </tr>
   </form>
+  {% endif %}
 
   <br>  
   <form method="GET" action="{{ url_for('reviews_form', game_id=game.id) }}">

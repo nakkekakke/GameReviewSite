@@ -33,3 +33,23 @@ class User(Base):
 
     def find_reviews(self):
         return self.reviews
+    
+    def favorite_category(self):
+        stmt = text('SELECT category.name, '
+            'AVG(review.rating) as avg_rating '
+            'FROM category, gamecategory, game, review, account '
+            'WHERE category.id = gamecategory.category_id '
+            'AND gamecategory.game_id = game.id '
+            'AND game.id = review.game_id '
+            'AND review.account_id = account.id '
+            'AND account.id = :account_id ' 
+            'GROUP BY category.name ORDER BY avg_rating DESC '
+            'LIMIT 1').params(account_id = self.id)
+        
+        res = db.engine.execute(stmt).first()
+
+        return {"name": res[0], "rating": round(res[1], 2)}
+
+
+
+

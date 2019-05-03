@@ -5,6 +5,10 @@
 <h1>{{ user.name }}</h1>
 <p>Username: {{ user.username }}</p>
 <p>Role: {{ user.role }}</p>
+<p>
+  User's favorite game category is <b>{{ favorite_category.name }}</b> 
+  with average rating of {{ favorite_category.rating }}
+</p>
 
 <h3>List of reviews by this user</h3>
 {% for review in reviews %}

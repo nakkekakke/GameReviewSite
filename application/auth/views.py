@@ -57,10 +57,14 @@ def auth_register():
 
 @app.route('/auth/user/')
 def auth_user():
+    if not current_user:
+        return redirect(url_for('auth_login'))
+
     return render_template(
         'auth/showuser.html',
         user = current_user,
-        reviews = current_user.find_reviews()
+        reviews = current_user.find_reviews(),
+        favorite_category = current_user.favorite_category()
     )
     
 

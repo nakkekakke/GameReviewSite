@@ -8,7 +8,7 @@
 
   <body>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
-      <a class="navbar-brand" href="{{ url_for('games_index') }}" >Game Review Site</a>
+      <a class="navbar-brand" href="{{ url_for('index') }}" >Game Review Site</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -23,6 +23,11 @@
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('categories_form') }}">Add a category</a>
           </li>
+          {% if current_user.role == 'ADMIN' %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('categories_deleteview') }}">Delete a category</a>
+          </li>
+          {% endif %}
         </ul>
         <div class="form-inline mt-2 mt-md-0">
 	        {% if current_user.is_authenticated %}

@@ -27,3 +27,23 @@ def categories_create():
     db.session().add(category)
     db.session().commit()
     return render_template('categories/new.html', form = form)
+
+@app.route('/categories/delete/', methods=['GET'])
+@login_required(role='ADMIN')
+def categories_deleteview():
+    categories = Category.query.all()
+
+    return render_template('categories/delete.html', categories = categories)
+
+@app.route('/categories/delete/<id>/', methods=['POST'])
+@login_required(role='ADMIN')
+def categories_delete(id):
+    category = Category.query.get(id)
+    if category:
+        db.session().delete(category)
+        db.session().commit()
+
+    return redirect(url_for('categories_deleteview'))
+    
+
+

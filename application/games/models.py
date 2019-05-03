@@ -36,13 +36,22 @@ class Game(Base):
         return self.reviews
 
     def find_average_score(game_id):
-        stmt = text("SELECT AVG(rating) FROM review"
-                    " WHERE review.game_id = :game_id"
+        stmt = text('SELECT AVG(rating) FROM review '
+            'WHERE review.game_id = :game_id'
         ).params(game_id = game_id)
 
         res = db.engine.execute(stmt).first()[0]
         if (res):
             return round(res, 2)
+    
+    @staticmethod
+    def find_highest_rated():
+        stmt = text('SELECT game.name, AVG(review.rating) as avg_rating '
+            'FROM game, review WHERE game.id = review.game_id '
+            'GROUP BY game.name '
+            'ORDER BY avg_rating DESC '
+            'LIMIT 1')
 
+        res = db.engine.execute(stmt).first()
 
-
+        return {"name": res[0], "rating": round(res[1], 2)}

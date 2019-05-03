@@ -83,9 +83,11 @@ def reviews_edit(id):
         return redirect(url_for('games_index'))
 
     if not newReviewData.validate():
+        game = Game.query.get(oldReview.game_id)
         return render_template('reviews/edit.html',
             review = oldReview,
-            form = newReviewData
+            form = newReviewData,
+            game = game
         )
 
     compareReviewsAndUpdate(oldReview, newReviewData)

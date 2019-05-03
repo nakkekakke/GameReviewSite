@@ -53,7 +53,7 @@ def games_view(id):
         return redirect(url_for('games_index'))
 
     avg = Game.find_average_score(id)
-    catform = newCatForm()
+    catform = newCatForm(id)
 
     return render_template('games/show.html',
         game = game,
@@ -100,7 +100,7 @@ def games_delete(id):
     return redirect(url_for('games_index'))
 
 
-@app.route('/games/<game_id>/catdelete/<category_id>', methods=['POST'])
+@app.route('/games/<game_id>/catdelete/<category_id>/', methods=['POST'])
 @login_required()
 def games_category_delete(game_id, category_id):
     game = Game.query.get(game_id)
@@ -151,7 +151,12 @@ def getCategories():
         categories.append((category.id, category.name))
     return categories
 
-def newCatForm():
+def newCatForm(game_id):
     catform = GameCategoryAddForm()
-    catform.category.choices = getCategories()
+    game = Game.query.get(game_id)
+    categories = []
+    for category in Category.query.all():
+        if not category in game.categories:
+            categories.append((category.id, category.name))
+    catform.category.choices = categories
     return catform
