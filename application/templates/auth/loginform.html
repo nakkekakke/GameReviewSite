@@ -1,6 +1,7 @@
 {% extends 'layout.html' %}
 
 {% block body %}
+<h1>Log in</h1>
 {{ error }}
 <form method="POST" action="{{ url_for('auth_login') }}">
   <table>

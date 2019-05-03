@@ -1,6 +1,7 @@
 {% extends 'layout.html' %}
 
 {% block body %}
+<h1>Register a new account</h1>
 {{ error }}
 <form method="POST" action="{{ url_for('auth_register') }}">
   <table>
