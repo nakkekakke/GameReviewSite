@@ -13,6 +13,9 @@ def reviews_form(game_id):
     if not game:
         return redirect(url_for('games_index'))
 
+    if already_reviewed(current_user, game.reviews):
+        return redirect(url_for('reviews_show', game_id = game.id))
+
     return render_template('reviews/new.html',
         game = game,
         form = ReviewForm()
@@ -115,7 +118,8 @@ def compareReviewsAndUpdate(old, new):
         old.rating = new.rating.data
     return old
 
-    
-    
-
-    
+def already_reviewed(user, reviews):
+    for review in reviews:
+        if review.account_id == user.id:
+            return True
+    return False
